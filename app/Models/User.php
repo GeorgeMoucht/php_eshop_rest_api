@@ -43,7 +43,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Establish one-to-many relationship with groups table
+     * Establish one-to-many relationship with tables
      */
     public function groups(): BelongsToMany
     {
@@ -52,6 +52,16 @@ class User extends Authenticatable
             'user_has_group',
             'user_id',
             'group_id',
+        );
+    }
+
+    public function permissions(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Permission::class,
+            'user_has_permission',
+            'user_id',
+            'permission_id',
         );
     }
 }
