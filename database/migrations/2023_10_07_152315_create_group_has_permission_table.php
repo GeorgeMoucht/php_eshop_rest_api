@@ -11,23 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_has_permission', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
+        Schema::create('group_has_permission', function (Blueprint $table) {
+            $table->unsignedBigInteger('group_id');
             $table->unsignedBigInteger('permission_id');
-            $table->timestamps();
 
             // Define the primary key of the table.
-            $table->primary(['user_id', 'group_id']);
+            $table->primary(['group_id', 'permission_id']);
 
-            //Define foreign key constrains
-            $table->foreign('user_id')
+            $table->foreign('group_id')
                 ->references('id')
-                ->on('users')
+                ->on('groups')
                 ->onDelete('cascade');
 
             $table->foreign('permission_id')
                 ->references('id')
-                ->on('groups')
+                ->on('permissions')
                 ->onDelete('cascade');
         });
     }
@@ -37,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_has_permission');
+        Schema::dropIfExists('group_has_permission');
     }
 };

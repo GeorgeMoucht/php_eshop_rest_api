@@ -33,4 +33,14 @@ class Group extends Model
             'user_id',
         );
     }
+
+    public function permissions(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Permission::class,
+            'group_has_permission',
+            'group_id',
+            'permission_id',
+        );
+    }
 }
