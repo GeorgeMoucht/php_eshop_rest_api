@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Order extends Model
+class ProductLine extends Model
 {
     use HasFactory;
+
 
     /**
      * The attributes that are mass assignable.
@@ -17,17 +17,14 @@ class Order extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'comments'
+        'product_line_name',
     ];
 
-    public function customer(): BelongsTo
+
+    public function products(): HasMany
     {
-        return $this->belongsTo(Customer::class);
+        return $this->hasMany(Product::class);
     }
 
 
-    public function orderDetails(): HasMany
-    {
-        return $this->hasMany(OrderDetails::class);
-    }
 }

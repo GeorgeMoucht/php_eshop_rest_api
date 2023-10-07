@@ -17,7 +17,7 @@ return new class extends Migration
             $table->timestamps();
 
             // Define the primary key of the table.
-            $table->primary(['user_id', 'group_id']);
+            $table->primary(['user_id', 'permission_id']);
 
             //Define foreign key constrains
             $table->foreign('user_id')
@@ -27,7 +27,7 @@ return new class extends Migration
 
             $table->foreign('permission_id')
                 ->references('id')
-                ->on('groups')
+                ->on('permissions')
                 ->onDelete('cascade');
         });
     }
