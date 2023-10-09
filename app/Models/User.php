@@ -54,19 +54,6 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * Implement JWT Authentication
-     */
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims(): array
-    {
-        return [];
-    }
-
-    /**
      * Establish one-to-many relationship with tables
      */
     public function groups(): BelongsToMany
