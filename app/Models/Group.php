@@ -16,7 +16,7 @@ class Group extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'group_name',
+        'name',
     ];
 
 
@@ -26,12 +26,7 @@ class Group extends Model
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(
-            User::class,
-            'user_has_group',
-            'group_id',
-            'user_id',
-        );
+        return $this->belongsToMany(User::class);
     }
 
     public function permissions(): BelongsToMany
