@@ -16,8 +16,11 @@ class Group extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'group_name',
+        'name',
     ];
+
+    public $timestamps = false;
+
 
 
     /**
@@ -26,21 +29,11 @@ class Group extends Model
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(
-            User::class,
-            'user_has_group',
-            'group_id',
-            'user_id',
-        );
+        return $this->belongsToMany(User::class);
     }
 
     public function permissions(): BelongsToMany
     {
-        return $this->belongsToMany(
-            Permission::class,
-            'group_has_permission',
-            'group_id',
-            'permission_id',
-        );
+        return $this->belongsToMany(Permission::class);
     }
 }

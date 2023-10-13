@@ -16,8 +16,10 @@ class Permission extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'permission_name',
+        'name',
     ];
+
+    public $timestamps = false;
 
 
 
@@ -27,21 +29,11 @@ class Permission extends Model
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(
-            User::class,
-            'user_has_permission',
-            'permission_id',
-            'user_id',
-        );
+        return $this->belongsToMany(User::class);
     }
 
     public function groups(): BelongsToMany
     {
-        return $this->belongsToMany(
-            Group::class,
-            'user_has_permission',
-            'permission_id',
-            'group_id',
-        );
+        return $this->belongsToMany(Group::class);
     }
 }
