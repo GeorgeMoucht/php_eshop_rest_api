@@ -2,34 +2,42 @@
 
 namespace Database\Seeders;
 
+use App\Enums\ACL\Groups\GroupName;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class GroupsTableSeeder extends Seeder
 {
+    protected array $groups;
+
+    public function __construct()
+    {
+        $this->groups = [
+            GroupName::ADMINISTRATOR,
+            GroupName::MODERATOR,
+            GroupName::CUSTOMER,
+            GroupName::USER,
+        ];
+    }
+
+
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        //
-        $now = Carbon::now();
-        $groups = [
-            [
-                'name' => 'administrators',
-            ],
-            [
-                'name' => 'moderators',
-            ],
-            [
-                'name' => 'customers',
-            ],
-            [
-                'name' => 'users',
-            ],
-        ];
+        DB::table('groups')->insert($this->generateGroupsArray());
+    }
 
-        DB::table('groups')->insert($groups);
+    /**
+     * @return array
+     */
+    public function generateGroupsArray(): array
+    {
+        $payload = [];
+        foreach ($this->groups as $group) {
+            $payload[] = ['name' => $group];
+        }
+        return $payload;
     }
 }

@@ -65,12 +65,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function permissions(): BelongsToMany
     {
-        return $this->belongsToMany(
-            Permission::class,
-            'user_has_permission',
-            'user_id',
-            'permission_id',
-        );
+        return $this->belongsToMany(Permission::class);
     }
 
     public function customer(): HasOne

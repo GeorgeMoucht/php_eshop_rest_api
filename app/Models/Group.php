@@ -19,6 +19,9 @@ class Group extends Model
         'name',
     ];
 
+    public $timestamps = false;
+
+
 
     /**
      * Establish one-to-many relationship
@@ -31,11 +34,6 @@ class Group extends Model
 
     public function permissions(): BelongsToMany
     {
-        return $this->belongsToMany(
-            Permission::class,
-            'group_has_permission',
-            'group_id',
-            'permission_id',
-        );
+        return $this->belongsToMany(Permission::class);
     }
 }
