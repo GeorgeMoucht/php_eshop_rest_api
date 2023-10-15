@@ -22,7 +22,7 @@ class ApiController extends BaseController
     private function payload(array $data, int $status, $method,  bool|int $error = false){
         return [
             'error' => $error,
-            'data' => $data,
+            'data' => $data,  //main extention   []
             'status' => $status,
             'method' => $method,
             'version' => '1.0.0.'
