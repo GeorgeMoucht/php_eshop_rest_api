@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             GroupUserTableSeeder::class,
             GroupPermissionTableSeeder::class,
             PermissionUserTableSeeder::class,
+            CustomerTableSeeder::class,
         ]);
     }
 }
