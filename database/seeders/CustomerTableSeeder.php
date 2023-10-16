@@ -10,7 +10,6 @@ use Illuminate\Database\Seeder;
 
 class CustomerTableSeeder extends Seeder
 {
-    //TODO Seed the customer table
     /**
      * Run the database seeds.
      */
