@@ -46,22 +46,6 @@ class GroupPermissionTableSeeder extends Seeder
     public function run(): void
     {
         $this->generateGroupPermissions();
-        $groups = [
-            // Administrators permissions
-            ['group_id' => GroupId::ADMINISTRATOR, 'permission_id' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]],
-            // Moderators permissions
-            ['group_id' => GroupId::MODERATOR, 'permission_id' => [1, 2, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16]],
-            // Customers permissions
-            ['group_id' => GroupId::CUSTOMER, 'permission_id' => [1, 6, 9, 10, 16]],
-            // Users permissions
-            ['group_id' => GroupId::USER, 'permission_id' => [4, 16]]
-        ];
-//
-//        foreach ($groups as $group) {
-//            $g = Group::find($group['group_id']);
-//            $g->permissions()->sync($group['permission_id']);
-//            $g->save();
-//        }
     }
 
     private function generateGroupPermissions(): void
