@@ -13,6 +13,9 @@ if (!function_exists('my_role')) {
      */
     function my_role()
     {
+        $user_id = auth()->id();
+        cache()->forget('my_role_' . $user_id);  //Delete the cache entry for the user
+
         return cache()->rememberForever('my_role_' . auth()->id(), function () {
 
             $role = auth()->user()->groups()->pluck('name')[0];
@@ -51,7 +54,13 @@ if (!function_exists('ndd')) {
 if (!function_exists('can')) {
     function can(string $permission): bool
     {
-        return auth()->user()->hasPermission($permission);
+        $user = auth()->user();
+
+        if($user) {
+            return auth()->user()->hasPermission($permission);
+        } else {
+            return false;
+        }
     }
 }
 
@@ -60,7 +69,14 @@ if (!function_exists('cannot')) {
 
     function cannot(string $permission): bool
     {
-        return auth()->user()->hasPermission($permission);
+        $user = auth()->user();
+
+        if($user) {
+            return !$user->hasPermission($permission);
+        } else
+        {
+            return false;
+        }
     }
 }
 
