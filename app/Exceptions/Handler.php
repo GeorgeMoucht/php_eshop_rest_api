@@ -35,7 +35,7 @@ class Handler extends ExceptionHandler
             [
                 'errors' => [
                     'status' => 401,
-                    'message' => 'Unauthenticated.',
+                    'message' => 'You need to be authenticated user.',
                 ]
             ], 401
         );
