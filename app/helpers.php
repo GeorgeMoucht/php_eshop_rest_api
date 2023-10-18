@@ -57,10 +57,10 @@ if (!function_exists('can')) {
         $user = auth()->user();
 
         if($user) {
-            return auth()->user()->hasPermission($permission);
-        } else {
-            return false;
+            return  $user->hasPermission($permission);
         }
+
+        return false;
     }
 }
 
@@ -73,18 +73,21 @@ if (!function_exists('cannot')) {
 
         if($user) {
             return !$user->hasPermission($permission);
-        } else
-        {
-            return false;
         }
+
+        return false;
     }
 }
 
 // If user can't execute the call then abort with status and message.
 if (!function_exists('abort_if_cannot')) {
 
-    function abort_if_cannot(string $permission_name)
+    function abort_if_cannot(string $permission_name, $api = false)
     {
+        if ($api){
+            return abort_if(cannot($permission_name), 403, "You dont have the required  [" . $permission_name . "] permissions to view this resource");
+        }
+
         return abort_if(cannot($permission_name), 403, "You dont have the required  \n\r[" . $permission_name . "]\n\r permissions to view this resource");
     }
 }
