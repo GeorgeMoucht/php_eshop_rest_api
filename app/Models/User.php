@@ -158,11 +158,8 @@ class User extends Authenticatable implements JWTSubject
                 }
             }
 
-            if ($role->permissions->whereIn('name', array_unique($rolePermissions))->first()) {
-                return true;
-            }
 
-            return false;
+            return in_array($permission, array_unique($rolePermissions));
         });
     }
 
