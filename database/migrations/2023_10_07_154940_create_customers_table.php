@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->unique(); // Unique constraint to ensure one-to-one relationship
+//            $table->unsignedBigInteger('shipping_id'); // Unique constraint to ensure one-to-one relationship
+//            $table->unsignedBigInteger('billing_id'); // Unique constraint to ensure one-to-one relationship
             $table->string('contact_lastname', '45')
                 ->nullable(false)
                 ->unique();
