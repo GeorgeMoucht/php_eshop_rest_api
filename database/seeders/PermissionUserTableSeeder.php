@@ -22,7 +22,6 @@ class PermissionUserTableSeeder extends Seeder
         $payloads = [
             PermissionId::POST_ROLE,
             PermissionId::PUT_ROLE,
-            PermissionId::GET_ROLE,
             PermissionId::DESTROY_ROLE,
         ];
             // Extract the IDs from the enum instances

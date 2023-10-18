@@ -53,12 +53,17 @@ enum PermissionId: int
             self::GET_CUSTOMER,
             self::GET_ORDER,
             self::GET_PRODUCT,
+
             self::POST_ORDER,
             self::POST_PRODUCT,
+            self::POST_USER,
+            self::POST_CUSTOMER,
+
             self::PUT_USER,
             self::PUT_CUSTOMER,
             self::PUT_ORDER,
             self::PUT_PRODUCT,
+
             self::DESTROY_USER,
             self::DESTROY_CUSTOMER,
             self::DESTROY_ORDER,
@@ -70,9 +75,14 @@ enum PermissionId: int
     {
         return [
             self::GET_USER,
+            self::GET_CUSTOMER,
             self::GET_ORDER,
             self::GET_PRODUCT,
+
             self::POST_ORDER,
+
+            self::PUT_USER,
+            self::PUT_CUSTOMER,
         ];
     }
 
@@ -80,9 +90,11 @@ enum PermissionId: int
     {
         return [
             self::GET_USER,
-            self::PUT_USER,
-            self::POST_CUSTOMER,
             self::GET_PRODUCT,
+
+            self::POST_CUSTOMER,
+
+            self::PUT_USER,
         ];
     }
 }

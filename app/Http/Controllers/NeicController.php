@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OrderResource;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -9,10 +11,39 @@ use Illuminate\Http\Request;
 final class NeicController extends ApiController
 {
     /**
-     * Display a listing of the resource.
+     * Return a list of items
      */
     public function index()
     {
+        // Retrieve all permissions assigned to the auth user with his roles.
+        ndd('my role', my_role());
+        dd('getAllPermissionsFromUserAndRoles', me()->getAllPermissionsFromUserAndRoles());
+//        ndd('getAllPermissionsFromRoles', me()->getAllPermissionsFromRoles());
+//
+//        ndd('getAllRoles', me()->getAllRoles());
+//        ndd('getAllPermissions', me()->getAllPermissions());
+
+        abort_if_cannot('post_order');
+//
+//        if(auth()->user()->hasPermission($permission)){
+//            bla bla
+//        }
+//
+//        can('post_order');
+
+        $user = User::first();
+
+//        dd($user->hasRoles(['administrator', 'user']));
+//        dd($user->hasPermission(
+//            permission: 'post_order',
+//            permit: false
+//        ));
+
+        dd($user->hasPermission('post_order'));
+//        $this->authorize('view', $order);
+//
+//        return new OrderResource($order);
+
         $user = User::query();
 
         if(request()->input('limit')){
@@ -30,18 +61,12 @@ final class NeicController extends ApiController
             status: 1000,
             method: __METHOD__
         );
+
+//        response.data.users.data <--  true|false
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
+     * Return a specific item
      */
     public function show(User $user)
     {
@@ -53,8 +78,18 @@ final class NeicController extends ApiController
         );
     }
 
+
     /**
-     * Update the specified resource in storage.
+     * Store a new item
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+
+    /**
+     * Update an item
      */
     public function update(Request $request, string $id)
     {
@@ -62,7 +97,7 @@ final class NeicController extends ApiController
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete an item
      */
     public function destroy(string $id)
     {

@@ -26,6 +26,9 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
 });
+Route::middleware(['auth:api'])->group(function () {
+    Route::post('/create-customer', [\App\Http\Controllers\CustomerController::class, 'store']);
+});
 
 Route::get('/users', [\App\Http\Controllers\NeicController::class, 'index']);
 Route::get('/users/{user}', [\App\Http\Controllers\NeicController::class, 'show']);

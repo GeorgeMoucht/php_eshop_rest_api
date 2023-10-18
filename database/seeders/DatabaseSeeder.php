@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,6 +20,11 @@ class DatabaseSeeder extends Seeder
             GroupUserTableSeeder::class,
             GroupPermissionTableSeeder::class,
             PermissionUserTableSeeder::class,
+            CustomerTableSeeder::class,
         ]);
+
+        Artisan::call('cache:clear');
+        Artisan::call('view:clear');
+        Artisan::call('config:clear');
     }
 }

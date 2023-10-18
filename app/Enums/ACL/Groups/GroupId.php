@@ -14,9 +14,6 @@ enum GroupId: int
     {
         return [
             self::ADMINISTRATOR->value,
-            self::MODERATOR->value,
-            self::CUSTOMER->value,
-            self::USER->value,
         ];
     }
 
@@ -24,8 +21,6 @@ enum GroupId: int
     {
         return [
             self::MODERATOR->value,
-            self::CUSTOMER->value,
-            self::USER->value
         ];
     }
 
@@ -33,7 +28,6 @@ enum GroupId: int
     {
         return [
             self::CUSTOMER->value,
-            self::USER->value,
         ];
     }
 
