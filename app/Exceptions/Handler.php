@@ -35,7 +35,7 @@ class Handler extends ExceptionHandler
             //
         });
     }
-    // TODO Review this code
+
     public function render($request, \Exception|Throwable $e)
     {
         // Determine if the response should be in JSON format.
