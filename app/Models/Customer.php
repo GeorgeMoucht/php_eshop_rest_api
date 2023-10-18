@@ -25,6 +25,7 @@ class Customer extends Model
         'city',
         'state',
         'postal_code',
+        'user_id',
         'country',
     ];
 
