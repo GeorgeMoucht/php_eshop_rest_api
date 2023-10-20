@@ -27,7 +27,13 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
 });
 Route::middleware(['auth:api'])->group(function () {
-    Route::post('/create-customer', [\App\Http\Controllers\CustomerController::class, 'store']);
+    Route::post('/customer/{user_id}', [\App\Http\Controllers\CustomerController::class,'storeSpecific']);
+    // Create a customer based on Authenticated user_id.
+    Route::post('/customer', [\App\Http\Controllers\CustomerController::class, 'store']);
+    // Get customer based on Authenticated user_id.
+    Route::get('/customer', [\App\Http\Controllers\CustomerController::class, 'showAuthenticated']);
+    // Get customer based user_id
+    Route::get('/customer/{user_id}', [\App\Http\Controllers\CustomerController::class, 'showSpecific']);
 });
 
 Route::get('/users', [\App\Http\Controllers\NeicController::class, 'index']);
