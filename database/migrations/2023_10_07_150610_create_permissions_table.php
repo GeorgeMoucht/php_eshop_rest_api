@@ -55,6 +55,13 @@ return new class extends Migration
                 \App\Models\Permission::firstOrCreate(['name' => $type . '_' . $permission]);
             }
         }
+        \App\Models\Permission::create([
+            'name' => \App\Enums\ACL\Permissions\PermissionName::GET_SPECIFIC_CUSTOMER->value
+        ]);
+
+        \App\Models\Permission::create([
+            'name' => \App\Enums\ACL\Permissions\PermissionName::POST_SPECIFIC_CUSTOMER->value
+        ]);
     }
 
 };
