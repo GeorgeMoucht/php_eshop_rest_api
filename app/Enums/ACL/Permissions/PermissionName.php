@@ -11,7 +11,7 @@ enum PermissionName: string
   case GET_PRODUCT = 'get_product';
   case POST_USER = 'post_user';
   case POST_ROLE = 'post_role';
-  case POST_CUSTOMER = 'post_customer';
+  case POST_CUSTOMER = 'post_customer'; // Auth create his own customer
   case POST_ORDER = 'post_order';
   case POST_PRODUCT = 'post_product';
   case PUT_USER = 'put_user';
@@ -24,4 +24,6 @@ enum PermissionName: string
   case DESTROY_CUSTOMER = 'destroy_customer';
   case DESTROY_ORDER = 'destroy_order';
   case DESTROY_PRODUCT = 'destroy_product';
+  case GET_SPECIFIC_CUSTOMER = 'get_specific_customer';
+  case POST_SPECIFIC_CUSTOMER = 'post_specific_customer';   // Admin or mod create a customer base on user_id
 }

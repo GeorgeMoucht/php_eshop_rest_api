@@ -24,6 +24,9 @@ enum PermissionId: int
     case DESTROY_CUSTOMER = 18;
     case DESTROY_ORDER = 19;
     case DESTROY_PRODUCT = 20;
+    case GET_SPECIFIC_CUSTOMER = 21;
+    case POST_SPECIFIC_CUSTOMER = 22;
+
 
     /**
      * Return Admin values that are all case.
@@ -53,6 +56,10 @@ enum PermissionId: int
             self::GET_CUSTOMER,
             self::GET_ORDER,
             self::GET_PRODUCT,
+
+            self::GET_SPECIFIC_CUSTOMER,
+
+            self::POST_SPECIFIC_CUSTOMER,
 
             self::POST_ORDER,
             self::POST_PRODUCT,
