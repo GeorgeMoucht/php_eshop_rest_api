@@ -26,16 +26,19 @@ class CustomerController extends ApiController
     public function index(Request $request)
     {
         // Retrieve "limit" and "page" query params from the request, default 10 and 1 if not provided.
-//        $this->customer->index($request->all());
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
 
-        // Get the "paginate" valie from the request.
+        // Get the "paginate" value from the request.
         $paginate = $request->input('paginate', false);
 
         $results = $this->customer->index($limit, $page, $paginate);
 
-        return response()->json(['data' => $results]);
+        return $this->apiResponse(
+            payload: ["customer" => $results],
+            status: 1000,
+            method: __METHOD__,
+        );
     }
 
     /**
