@@ -25,6 +25,8 @@ class CustomerController extends ApiController
      */
     public function index(Request $request)
     {
+        abort_if_cannot(PermissionName::GET_SPECIFIC_CUSTOMER->value, true);
+
         // Retrieve "limit" and "page" query params from the request, default 10 and 1 if not provided.
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
