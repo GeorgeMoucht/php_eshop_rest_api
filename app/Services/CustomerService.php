@@ -70,4 +70,22 @@ class CustomerService
        return Customer::where('user_id', $user_id)->first();
     }
 
+    public function index($limit, $page, $paginate) {
+        // Create query builder for "customers" model.
+        $customers = Customer::query();
+
+        // if limit provided, set to numbers to be returned.
+        if ($limit) {
+            $customers->limit($limit);
+        }
+
+        // Check if user wants paginated results.
+        if($paginate) {
+            return $customers->paginate($limit, ['*'], 'page', $page);
+        }
+
+        // Retrieve the data.
+        return $customers->get();
+    }
+
 }

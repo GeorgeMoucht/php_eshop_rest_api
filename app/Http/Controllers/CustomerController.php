@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ACL\Permissions\PermissionName;
+use App\Models\Customer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Services\CustomerService;
@@ -20,11 +21,21 @@ class CustomerController extends ApiController
 
     /**
      * Return list of customers
-     * @return void
+     * @return JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
+        // Retrieve "limit" and "page" query params from the request, default 10 and 1 if not provided.
+//        $this->customer->index($request->all());
+        $limit = $request->input('limit', 10);
+        $page = $request->input('page', 1);
 
+        // Get the "paginate" valie from the request.
+        $paginate = $request->input('paginate', false);
+
+        $results = $this->customer->index($limit, $page, $paginate);
+
+        return response()->json(['data' => $results]);
     }
 
     /**
