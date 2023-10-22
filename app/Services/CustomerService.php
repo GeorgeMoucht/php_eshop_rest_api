@@ -70,7 +70,8 @@ class CustomerService
        return Customer::where('user_id', $user_id)->first();
     }
 
-    public function index($limit, $page, $paginate) {
+    public function index($limit, $page, $paginate): \Illuminate\Database\Eloquent\Collection|\Illuminate\Contracts\Pagination\LengthAwarePaginator|array
+    {
         // Create query builder for "customers" model.
         $customers = Customer::query();
 
@@ -86,6 +87,34 @@ class CustomerService
 
         // Retrieve the data.
         return $customers->get();
+    }
+
+    public function updateAuthenticated(array $data): bool|int
+    {
+        if(!me()->customer()->first()) {
+            return  false;
+        }
+
+        return me()->customer()->update($data);
+    }
+
+    public function updateSpecific(array $data, $user_id): bool|int
+    {
+        $customer = Customer::where('user_id', $user_id)->first();
+
+        if(!$customer) {
+            return false;
+        }
+
+        return $customer->update($data);
+    }
+
+    public function destroy($user_id)
+    {
+        // Make this customer user again
+        $this->role->update(GroupId::USER->value);
+
+        return Customer::where('user_id', $user_id)->first()->delete();
     }
 
 }

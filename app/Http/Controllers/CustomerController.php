@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ACL\Permissions\PermissionName;
+use App\Http\Requests\Customer\CustomerUpdateRequest;
 use App\Models\Customer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -21,11 +22,12 @@ class CustomerController extends ApiController
 
     /**
      * Return list of customers
+     * @param Request $request
      * @return JsonResponse
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
-        abort_if_cannot(PermissionName::GET_SPECIFIC_CUSTOMER->value, true);
+        abort_if_cannot(PermissionName::INDEX_CUSTOMER->value, true);
 
         // Retrieve "limit" and "page" query params from the request, default 10 and 1 if not provided.
         $limit = $request->input('limit', 10);
@@ -49,7 +51,7 @@ class CustomerController extends ApiController
      */
     public function showAuthenticated(): JsonResponse
     {
-//        dd(PermissionName::GET_CUSTOMER);
+        // dd(PermissionName::GET_CUSTOMER);
         // Check if the user have the permission or not.
         abort_if_cannot(PermissionName::GET_CUSTOMER->value, true);
 
@@ -72,8 +74,7 @@ class CustomerController extends ApiController
     }
 
     /**
-     * Return customer by user_id.
-     *
+     * Return customer by user_id
      * @param $user_id
      * @return JsonResponse
      */
@@ -100,9 +101,7 @@ class CustomerController extends ApiController
     }
 
     /**
-     * Store a new customer based on
-     * authenticated user_id.
-     *
+     * Store a new customer based on authenticated user_id.
      * @param CustomerCreateRequest $request
      * @return JsonResponse
      */
@@ -133,8 +132,7 @@ class CustomerController extends ApiController
     }
 
     /**
-     * Store a new customer base
-     * on given user_id
+     * Store a new customer base on given user_id
      * @param CustomerCreateRequest $request
      * @param $user_id
      * @return JsonResponse
@@ -162,17 +160,100 @@ class CustomerController extends ApiController
     }
 
     /**
-     * Update an item
+     * Update authenticated customer
+     * @param CustomerUpdateRequest $request
+     * @return JsonResponse
      */
-    public function update(Request $request, string $id)
+    public function updateAuthenticated(CustomerUpdateRequest $request): JsonResponse
     {
+        // Update should be accessed as admin or mods only
+        abort_if_cannot(PermissionName::PUT_CUSTOMER->value, true);
 
+        // Check if entire request array is empty
+        if($request->all() === []) {
+            return $this->apiErrorResponse(
+                payload: ['message' => "Data are empty. Please try again."],
+                status: 404,
+                method: __METHOD__,
+                httpStatusCode: 404
+            );
+        }
+
+        // Update the Customer data
+        if($this->customer->updateAuthenticated($request->all())) {
+            return $this->apiResponse(
+                payload: ['message' => "Customer updated."],
+                status: 1000,
+                method: __METHOD__,
+            );
+        }
+
+        return $this->apiErrorResponse(
+            payload: ['message' => "Something went wrong."],
+            status: 404,
+            method: __METHOD__,
+            httpStatusCode: 404
+        );
     }
 
-    /** Delete an Item
+    /**
+     * Update a specific customer base on give user_id
+     * @param CustomerUpdateRequest $request
+     * @param $user_id
+     * @return JsonResponse
      */
-    public function destroy(string $id)
+    public function updateSpecific(CustomerUpdateRequest $request, $user_id): JsonResponse
     {
+        abort_if_cannot(PermissionName::PUT_SPECIFIC_CUSTOMER->value, true);
 
+        // Check if entire request is empty
+        if($request->all() === []) {
+            return $this->apiErrorResponse(
+                payload:['message' => "Data are empty. Please try again."],
+                status: 404,
+                method: __METHOD__,
+                httpStatusCode: 404
+            );
+        }
+
+        // Update the Customer data
+        if($this->customer->updateSpecific($request->all(), $user_id)) {
+            return $this->apiResponse(
+                payload: ['message' => "Customer updated."],
+                status: 1000,
+                method: __METHOD__,
+            );
+        }
+
+        return $this->apiErrorResponse(
+            payload: ['message' => "Something went wrong."],
+            status: 404,
+            method: __METHOD__,
+            httpStatusCode: 404
+        );
+    }
+
+    /**
+     * Delete a specific user
+     * @param string $user_id
+     * @return JsonResponse
+     */
+    public function destroy(string $user_id): JsonResponse
+    {
+        abort_if_cannot(PermissionName::DESTROY_CUSTOMER->value, true);
+
+        if($this->customer->destroy($user_id)) {
+            return $this->apiResponse(
+                payload: ['message' => "Customer deleted."],
+                status: 1000,
+                method: __METHOD__,
+            );
+        }
+        return $this->apiErrorResponse(
+            payload: ['message' => "Something went wrong."],
+            status: 404,
+            method: __METHOD__,
+            httpStatusCode: 404
+        );
     }
 }
