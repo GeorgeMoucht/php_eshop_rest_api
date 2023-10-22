@@ -62,6 +62,12 @@ return new class extends Migration
         \App\Models\Permission::create([
             'name' => \App\Enums\ACL\Permissions\PermissionName::POST_SPECIFIC_CUSTOMER->value
         ]);
+        \App\Models\Permission::create([
+            'name' => \App\Enums\ACL\Permissions\PermissionName::INDEX_CUSTOMER->value
+        ]);
+        \App\Models\Permission::create([
+            'name' => \App\Enums\ACL\Permissions\PermissionName::PUT_SPECIFIC_CUSTOMER->value
+        ]);
     }
 
 };
