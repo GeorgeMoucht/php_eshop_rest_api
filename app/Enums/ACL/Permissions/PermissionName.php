@@ -24,6 +24,8 @@ enum PermissionName: string
   case DESTROY_CUSTOMER = 'destroy_customer';
   case DESTROY_ORDER = 'destroy_order';
   case DESTROY_PRODUCT = 'destroy_product';
+  case INDEX_CUSTOMER = 'index_customer';
+  case PUT_SPECIFIC_CUSTOMER = 'put_specific_customer';
   case GET_SPECIFIC_CUSTOMER = 'get_specific_customer';
   case POST_SPECIFIC_CUSTOMER = 'post_specific_customer';   // Admin or mod create a customer base on user_id
 }
