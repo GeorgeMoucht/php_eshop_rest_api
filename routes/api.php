@@ -45,6 +45,15 @@ Route::middleware(['auth:api'])->group(function () {
             // 2. http://localhost:8000/api/customers?paginate=true&limit=1
             // 3. http://localhost:8000/api/customers?paginate=true&limit=1&page=2
     Route::get('/customers', [\App\Http\Controllers\CustomerController::class, 'index']);
+
+    // Update authenticated customer.
+    Route::put('/customers', [\App\Http\Controllers\CustomerController::class, 'updateAuthenticated']);
+
+    // Update specific customer base on user_id
+    Route::put('/customers/{user_id}', [\App\Http\Controllers\CustomerController::class, 'updateSpecific']);
+
+    // Delete customer
+    Route::delete('/customers/{user_id}', [\App\Http\Controllers\CustomerController::class, 'destroy']);
 });
 
 Route::get('/users', [\App\Http\Controllers\NeicController::class, 'index']);
