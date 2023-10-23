@@ -54,6 +54,9 @@ Route::middleware(['auth:api'])->group(function () {
 
     // Delete customer
     Route::delete('/customers/{user_id}', [\App\Http\Controllers\CustomerController::class, 'destroy']);
+
+    // Create Order
+    Route::post('/order', [\App\Http\Controllers\OrderController::class, 'store']);
 });
 
 Route::get('/users', [\App\Http\Controllers\NeicController::class, 'index']);
