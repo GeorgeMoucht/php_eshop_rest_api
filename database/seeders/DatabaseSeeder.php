@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
             GroupPermissionTableSeeder::class,
             PermissionUserTableSeeder::class,
             CustomerTableSeeder::class,
-            ProductLineSeeder::class,
+            ProductCategoryTableSeeder::class,
+            ProductTableSeeder::class,
         ]);
 
         Artisan::call('cache:clear');
