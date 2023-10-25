@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\ProductLine;
+use App\Models\ProductCategory;
 
 
-class ProductLineSeeder extends Seeder
+class ProductCategoryTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -30,7 +30,7 @@ class ProductLineSeeder extends Seeder
         ];
 
         foreach($productLines as $lineName) {
-            $productLine = new ProductLine([
+            $productLine = new ProductCategory([
                 'name' => $lineName
             ]);
             $productLine->save();
