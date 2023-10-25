@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class ProductLine extends Model
+class ProductCategory extends Model
 {
     use HasFactory;
 
@@ -19,7 +19,7 @@ class ProductLine extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'product_line_name',
+        'product_category_name',
     ];
 
 
