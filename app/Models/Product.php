@@ -10,13 +10,17 @@ class Product extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
+
     protected $fillable = [
         'name',
+        'product_category_id',
         'scale',
         'vendor',
         'description',
