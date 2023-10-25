@@ -13,18 +13,18 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_line_id');
+            $table->unsignedBigInteger('product_category_id');
             $table->string('name', '150')
                 ->unique()
                 ->nullable(false);
-            $table->float('scale')->nullable(false);
+            $table->string('scale', '30')->nullable(false);
             $table->string('vendor', '100')->nullable(false);
             $table->text('description')->nullable(false);
             $table->integer('quantity_in_stock')->nullable(false);
             $table->float('buy_price')->nullable(false);
             $table->float('msrp')->nullable(false);
 
-            $table->foreign('product_line_id')->references('id')->on('product_lines');
+            $table->foreign('product_category_id')->references('id')->on('product_categories');
         });
     }
 
