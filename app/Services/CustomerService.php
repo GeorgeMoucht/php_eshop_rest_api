@@ -9,11 +9,13 @@ class CustomerService
 {
     protected ResponseService $response;
     protected RoleService $role;
+    protected UserService $authUser;
 
-    public function __construct(ResponseService $response, RoleService $role)
+    public function __construct(ResponseService $response, RoleService $role, UserService $authUser)
     {
         $this->response = $response;
         $this->role = $role;
+        $this->authUser = $authUser;
     }
 
     /**
@@ -24,8 +26,10 @@ class CustomerService
      */
     public function create(array $data) : array|object|bool
     {
-        if(me()->customer()->create($data))
+        // Get the authenticated data and create then customer.
+        if($this->authUser->getAuthenticatedUser()->customer()->create($data))
         {
+            //Change the role of the user as customer.
             return $this->role->update(GroupId::CUSTOMER->value);
         }
         return false;
@@ -57,7 +61,7 @@ class CustomerService
      */
     public function showAuthenticated()
     {
-        return me()->customer;
+        return $this->authUser->getAuthenticatedUser()->customer;
     }
 
     /**
@@ -91,11 +95,11 @@ class CustomerService
 
     public function updateAuthenticated(array $data): bool|int
     {
-        if(!me()->customer()->first()) {
+        if(!$this->authUser->getAuthenticatedUser()->customer()->first()) {
             return  false;
         }
 
-        return me()->customer()->update($data);
+        return $this->authUser->getAuthenticatedUser()->customer()->update($data);
     }
 
     public function updateSpecific(array $data, $user_id): bool|int
