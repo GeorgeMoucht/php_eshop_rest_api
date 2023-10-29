@@ -28,8 +28,11 @@ class Order extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'customer_id',
         'comments',
         'status',
+        'order_date',
+        'shipped_date',
     ];
 
     public function customer(): BelongsTo
