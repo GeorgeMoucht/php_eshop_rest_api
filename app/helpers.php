@@ -6,18 +6,6 @@ declare(strict_types=1);
 use Symfony\Component\VarDumper\VarDumper;
 use Carbon\Carbon;
 
-
-// Return the customer_id
-if(!function_exists('getCustomerId')) {
-    function getCustomerId()
-    {
-        if(me()->customer->id) {
-            return me()->customer->id;
-        }
-        return '-';
-    }
-}
-
 // Return the first rank that this user have in database.
 if (!function_exists('my_role')) {
     /**

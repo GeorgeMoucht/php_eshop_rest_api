@@ -121,4 +121,12 @@ class CustomerService
         return Customer::where('user_id', $user_id)->first()->delete();
     }
 
+
+    public function getAuthCustomerId() {
+        if($this->authUser->getAuthenticatedUser()->customer->id)
+        {
+            return $this->authUser->getAuthenticatedUser()->customer->id;
+        }
+        return false;
+    }
 }
