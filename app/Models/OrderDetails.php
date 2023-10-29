@@ -10,6 +10,9 @@ class OrderDetails extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -19,6 +22,8 @@ class OrderDetails extends Model
         'quantity_ordered',
         'price_each',
         'order_line_number',
+        'product_id',
+        'order_id',
     ];
 
     public function product(): HasOne
