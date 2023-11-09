@@ -10,6 +10,7 @@ use App\Models\Product;
 class OrderService
 {
     protected CustomerService $customer;
+    protected OrderDetailsService $orderDetails;
 
     public function __construct(CustomerService $customer)
     {
@@ -47,5 +48,75 @@ class OrderService
         }
         return $order;
     }
+
+    /**
+     * @return array
+     */
+    public function showAuthenticated()
+    {
+        $customer_id = $this->customer->getAuthCustomerId();
+        if($customer_id)
+        {
+            $orders = Order::where('customer_id', $customer_id)->get();
+
+            foreach($orders as $order) {
+                $orderDetailsAttributes = [
+                    'product_id',
+                    'quantity_ordered',
+                    'price_each',
+                    'order_line_number'
+                ];
+                $order->orderDetails = OrderDetails::where('order_id', $order->id)
+                    ->select($orderDetailsAttributes)->get();
+            }
+            return $orders;
+        }
+        return [];
+    }
+
+    /**
+     * Return order list based on given $customer_id.
+     * @param Int $customer_id
+     * @return array
+     */
+    public function showSpecific(Int $customer_id)
+    {
+        if($customer_id)
+        {
+            $orders = Order::where('customer_id', $customer_id)->get();
+
+            foreach($orders as $order) {
+                $orderDetailsAttributes = [
+                    'product_id',
+                    'quantity_ordered',
+                    'price_each',
+                    'order_line_number'
+                ];
+                $order->orderDetails = OrderDetails::where('order_id', $order->id)
+                    ->select($orderDetailsAttributes)->get();
+            }
+            return $orders;
+        }
+        return [];
+    }
+
+    /**
+     *
+     * Update specific order based on customer_id.
+     * @param array $data
+     * @param Int $customer_id
+     * @return bool|int
+     */
+    public function updateSpecific(array $data, Int $order_id): bool|int
+    {
+        $order = Order::where('id', $order_id)->first();
+
+        if(!$order)
+        {
+            return false;
+        }
+        return $order->update($data);
+    }
+
 
 }

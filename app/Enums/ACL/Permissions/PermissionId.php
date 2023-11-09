@@ -28,6 +28,8 @@ enum PermissionId: int
     case POST_SPECIFIC_CUSTOMER = 22;
     case INDEX_CUSTOMER = 23;
     case PUT_SPECIFIC_CUSTOMER = 24;
+    case GET_SPECIFIC_ORDER = 25;
+    case PUT_SPECIFIC_ORDER = 26;
 
 
     /**
@@ -67,12 +69,14 @@ enum PermissionId: int
             self::POST_PRODUCT,
             self::POST_USER,
             self::POST_CUSTOMER,
+            self::GET_SPECIFIC_ORDER,
 
             self::PUT_USER,
             self::PUT_CUSTOMER,
             self::PUT_ORDER,
             self::PUT_PRODUCT,
             self::PUT_SPECIFIC_CUSTOMER,
+            self::PUT_SPECIFIC_ORDER,
 
             self::DESTROY_USER,
             self::DESTROY_CUSTOMER,

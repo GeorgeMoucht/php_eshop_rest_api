@@ -68,6 +68,12 @@ return new class extends Migration
         \App\Models\Permission::create([
             'name' => \App\Enums\ACL\Permissions\PermissionName::PUT_SPECIFIC_CUSTOMER->value
         ]);
+        \App\Models\Permission::create([
+            'name' => \App\Enums\ACL\Permissions\PermissionName::GET_SPECIFIC_ORDER->value
+        ]);
+        \App\Models\Permission::create([
+            'name' => \App\Enums\ACL\Permissions\PermissionName::PUT_SPECIFIC_ORDER->value
+        ]);
     }
 
 };

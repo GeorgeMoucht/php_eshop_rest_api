@@ -64,9 +64,34 @@ Route::middleware(['auth:api'])->group(function () {
     });
 
 
+    Route::prefix("/order")->group(function () {
+        // Create Order as Authenticated customer.
+        // Example body to pass:
+//          {
+//              "comments" : "blah blah blah",
+//              "order": [
+//                          {
+//                              "product_id" : 1,
+//                              "quantity_ordered" : 10
+//                          },
+//                          {
+//                              "product_id" : 8,
+//                              "quantity_ordered": 1
+//                          }
+//                       ]
+//          }
+        Route::post('/create', [\App\Http\Controllers\OrderController::class, 'store']);
+        //Get order list of Authenticated customer.
+        Route::get('/my-orders', [App\Http\Controllers\OrderController::class, 'showAuthenticated']);
 
-    // Create Order
-    Route::post('/order', [\App\Http\Controllers\OrderController::class, 'store']);
+        // Calls with specific customer_id given.
+        Route::prefix('{customer_id}')->group(function () {
+            // Get order list based on given customer_id.
+            Route::get('/list', [App\Http\Controllers\OrderController::class, 'showSpecific']);
+            // Update order based on customer_id
+            Route::put('/update', [App\Http\Controllers\OrderController::class, 'updateSpecific']);
+        });
+    });
 });
 
 // Both two are test routes. Should be deleted.
