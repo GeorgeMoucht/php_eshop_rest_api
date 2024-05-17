@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OrderController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,42 +32,42 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 
 Route::middleware(['auth:api'])->group(function () {
     // All customer related requests.
-    Route::prefix('/customer')->group(function () {
+    Route::prefix('/customers')->group(function () {
 
         // Customers list
         // Example Url:
         // 1. http://localhost:8000/api/customers
         // 2. http://localhost:8000/api/customers?paginate=true&limit=1
         // 3. http://localhost:8000/api/customers?paginate=true&limit=1&page=2
-        Route::get('', [\App\Http\Controllers\CustomerController::class, 'index']);
+        Route::get('/', [CustomerController::class, 'index']);
 
         // Create a customer based on Authenticated user.
-        Route::post('register', [\App\Http\Controllers\CustomerController::class, 'store']);
+        Route::post('/', [CustomerController::class, 'store']);
 
         // Get customer based on Authenticated user.
-        Route::get('profile', [\App\Http\Controllers\CustomerController::class, 'showAuthenticated']);
+        Route::get('/me', [CustomerController::class, 'showAuthenticated']);
 
         // Update authenticated customer.
-        Route::put('/', [\App\Http\Controllers\CustomerController::class, 'updateAuthenticated']);
+        Route::put('/me', [CustomerController::class, 'updateAuthenticated']);
 
         // With Specific user_id.
         Route::prefix('{user_id}')->group(function () {
             // Create customer based user_id.
-            Route::post('', [\App\Http\Controllers\CustomerController::class, 'storeSpecific']);
+            Route::post('/', [CustomerController::class, 'storeSpecific']);
 
             // Get customer based user_id
-            Route::get('', [\App\Http\Controllers\CustomerController::class, 'showSpecific']);
+            Route::get('/', [CustomerController::class, 'showSpecific']);
 
             // Update specific customer base on user_id
-            Route::put('', [\App\Http\Controllers\CustomerController::class, 'updateSpecific']);
+            Route::put('/', [CustomerController::class, 'updateSpecific']);
 
             // Delete customer
-            Route::delete('', [\App\Http\Controllers\CustomerController::class, 'destroy']);
+            Route::delete('/', [CustomerController::class, 'destroy']);
         });
     });
 
 
-    Route::prefix("/order")->group(function () {
+    Route::prefix("/orders")->group(function () {
         // Create Order as Authenticated customer.
         // Example body to pass:
 //          {
@@ -80,16 +83,16 @@ Route::middleware(['auth:api'])->group(function () {
 //                          }
 //                       ]
 //          }
-        Route::post('/create', [\App\Http\Controllers\OrderController::class, 'store']);
+        Route::post('/', [OrderController::class, 'store']);
         //Get order list of Authenticated customer.
-        Route::get('/my-orders', [App\Http\Controllers\OrderController::class, 'showAuthenticated']);
+        Route::get('/me', [OrderController::class, 'showAuthenticated']);
 
         // Calls with specific customer_id given.
-        Route::prefix('{customer_id}')->group(function () {
+        Route::prefix('/customers/{customer_id}')->group(function () {
             // Get order list based on given customer_id.
-            Route::get('/list', [App\Http\Controllers\OrderController::class, 'showSpecific']);
+            Route::get('/orders', [OrderController::class, 'showSpecific']);
             // Update order based on customer_id
-            Route::put('/update', [App\Http\Controllers\OrderController::class, 'updateSpecific']);
+            Route::put('/orders/{order_id}', [OrderController::class, 'updateSpecific']);
         });
     });
 });
