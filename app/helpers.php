@@ -89,5 +89,6 @@ if (!function_exists('abort_if_cannot')) {
         }
 
         return abort_if(cannot($permission_name), 403, "You dont have the required  \n\r[" . $permission_name . "]\n\r permissions to view this resource");
+
     }
 }

@@ -72,8 +72,10 @@ class OrderController extends ApiController
                 "message" => "This customer doesn't have active order",
                 "orders" => $orders
             ],
-            status: 1000,
-            method: __METHOD__
+            status: 404,
+            method: __METHOD__,
+            httpStatusCode: 404
+
         );
     }
 
@@ -106,8 +108,9 @@ class OrderController extends ApiController
                 "message" => "This customer doesn't have active order",
                 "orders" => $orders
             ],
-            status: 1000,
-            method: __METHOD__
+            status: 404,
+            method: __METHOD__,
+            httpStatusCode: 404
         );
     }
 
@@ -139,8 +142,9 @@ class OrderController extends ApiController
             payload: [
                 "message" => "Order not found."
             ],
-            status: 1000,
-            method: __METHOD__
+            status: 404,
+            method: __METHOD__,
+            httpStatusCode: 404
         );
     }
 }
