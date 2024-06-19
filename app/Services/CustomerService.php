@@ -123,10 +123,17 @@ class CustomerService
 
 
     public function getAuthCustomerId() {
-        if($this->authUser->getAuthenticatedUser()->customer->id)
-        {
-            return $this->authUser->getAuthenticatedUser()->customer->id;
+        $customer = $this->authUser->getAuthenticatedUser()->customer;
+
+        if($customer && $customer->id) {
+            return $customer->id;
         }
+
         return false;
+//        if($this->authUser->getAuthenticatedUser()->customer->id)
+//        {
+//            return $this->authUser->getAuthenticatedUser()->customer->id;
+//        }
+//        return false;
     }
 }

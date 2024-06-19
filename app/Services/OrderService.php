@@ -19,6 +19,11 @@ class OrderService
     public function create(array $data)
     {
         // 1. Create the order and fill comments if needed.
+        $customerId = $this->customer->getAuthCustomerId();
+
+        if(!$customerId) {
+            return false;
+        }
 
         // Fill customer_id
         $order = Order::create([
