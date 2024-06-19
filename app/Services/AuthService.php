@@ -43,17 +43,14 @@ class AuthService
         return $this->responseService->success(['message' => 'User successfully signed out.']);
     }
 
-    public function register(RegisterRequest $request): JsonResponse
+    public function register(RegisterRequest $request)
     {
         $user = User::create([
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
         ]);
 
-        return $this->responseService->success([
-            'message' => 'User successfully registered',
-            'user' => $user,
-        ], 201);
+        return $user;
     }
 
     public function refresh(): JsonResponse
