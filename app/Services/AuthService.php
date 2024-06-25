@@ -18,29 +18,35 @@ class AuthService
         $this->responseService = $responseService;
     }
 
-    public function login(LoginRequest $request): JsonResponse
+    public function login(LoginRequest $request)
     {
         $credentials = $request->only('email', 'password');
 
         if (!Auth::attempt($credentials)) {
-            return $this->responseService->error('Email or Password field are wrong.', 401);
+            return false;
         }
 
         $user = Auth::user();
         $token = JWTAuth::fromUser($user); // Generate a token for the user
 
-        return response()->json([
+        return [
+            'user' => $user,
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => strtotime(now()->addHour()), // Change token expiry as needed
-            'user' => $user,
-        ]);
+            'expires_in' => strtotime(now()->addHour())
+        ];
     }
 
-    public function logout(): JsonResponse
+    public function logout()
     {
-        auth()->logout();
-        return $this->responseService->success(['message' => 'User successfully signed out.']);
+        $body = auth()->logout();
+        if(!$body) {
+            return false;
+        }
+
+        return [
+            'message' => 'User successfully signed out.'
+        ];
     }
 
     public function register(RegisterRequest $request)
@@ -50,7 +56,7 @@ class AuthService
             'password' => bcrypt($request->input('password')),
         ]);
 
-        return $user;
+        return ['user' => $user];
     }
 
     public function refresh(): JsonResponse
